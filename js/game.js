@@ -2,10 +2,15 @@ var game = new Phaser.Game({
     type: Phaser.AUTO,    // renderer
     width: 640,
     height: 480,
+    backgroundColor: '#9c9c9c',
+    render: {
+        pixelArt: true,
+        transparent: true
+    },
     physics: {
         default: 'arcade',
         arcade: {
-            gravity: { y: 500 },
+            gravity: { y: 800 },
             debug: false
         }
     },
@@ -54,12 +59,13 @@ function create () {
     // Platforms
     //
     platforms = this.physics.add.staticGroup();
-    platforms.create(0, 240, 'block').setScale(30, 1).refreshBody();
+    platforms.create(0, 240, 'block').setScale(60, 3).refreshBody();
 
     //
     // Player
     //
-    player = this.physics.add.sprite(30, 150, 'man');
+    player = this.physics.add.sprite(100, 150, 'man');
+    player.body.setSize(6, 25, true);
     player.setScale(3);
     // player.setSize(6, 25);
     player.setBounce(0.2);
@@ -100,7 +106,9 @@ function create () {
     //
     // Shoe
     //
-    shoe = this.physics.add.sprite(10, 150, 'shoe');
+    shoe = this.physics.add.sprite(20, 150, 'shoe');
+    shoe.body.setSize(4, 1, true);
+    shoe.setScale(3);
     this.anims.create({
         key: 'glow',
         frames: this.anims.generateFrameNumbers('shoe', { start: 0, end: 3 }),
