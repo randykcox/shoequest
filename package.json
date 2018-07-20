@@ -2,9 +2,10 @@
   "name": "shoequest",
   "version": "1.0.0",
   "description": "Low-res JavaScript video game",
+  "main": "src/index.js",
   "scripts": {
-    "webpack": "webpack",
-    "start": "python3 -m http.server",
+    "build": "webpack",
+    "start": "npm run build && webpack-dev-server --port=8000",
     "deploy": "surge ."
   },
   "homepage": "https://shoequest.surge.sh",
@@ -16,7 +17,7 @@
   "private": true,
   "devDependencies": {
     "webpack": "^4.16.1",
-    "webpack-cli": "^3.0.8",
+    "webpack-cli": "^3.1.0",
     "webpack-dev-server": "^3.1.4"
   },
   "dependencies": {
