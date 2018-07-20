@@ -2,6 +2,11 @@
   "name": "shoequest",
   "version": "1.0.0",
   "description": "Low-res JavaScript video game",
+  "scripts": {
+    "webpack": "webpack",
+    "start": "python3 -m http.server",
+    "deploy": "surge ."
+  },
   "homepage": "https://shoequest.surge.sh",
   "bugs": {
     "email": "randy+shoequest@cox-tv.com"
@@ -9,8 +14,12 @@
   "author": "Randy Cox <randy@cox-tv.com>",
   "license": "UNLICENSED",
   "private": true,
-  "scripts": {
-    "start": "python3 -m http.server",
-    "deploy": "surge ."
+  "devDependencies": {
+    "webpack": "^4.16.1",
+    "webpack-cli": "^3.0.8",
+    "webpack-dev-server": "^3.1.4"
+  },
+  "dependencies": {
+    "phaser": "^3.11.0"
   }
 }
