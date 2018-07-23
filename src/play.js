@@ -1,3 +1,5 @@
+import Phaser from 'phaser';
+
 var playScene = new Phaser.Scene('play');
 playScene.preload = function preload () {
     this.load.spritesheet('man', 'assets/manSpritesheet.png', {
@@ -21,6 +23,19 @@ playScene.create = function create () {
     let win = function win (player, shoe) {
         shoe.disableBody(true, true);
         scoreText.setText('You win.');
+
+        // this.cameras.main.shake(500);
+
+        const menuDelay = 2000;
+
+        // Fade out
+        const fadeDuration = 250;
+        this.time.delayedCall(menuDelay-fadeDuration, function () {
+            this.cameras.main.fade(fadeDuration);
+        }, [], this);
+        // Back to the menu
+        this.time.delayedCall(menuDelay, function () { this.scene.start('menu'); },
+            [], this);
     };
 
     //
@@ -125,7 +140,7 @@ playScene.update = function update () {
     }
 }
 
-module.exports = playScene;
+export default playScene;
 
 /*
 var playState = {

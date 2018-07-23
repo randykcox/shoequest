@@ -1,5 +1,6 @@
 import 'phaser';
 
+import menuScene from './menu';
 import playScene from './play';
 
 var game = new Phaser.Game({
@@ -18,7 +19,8 @@ var game = new Phaser.Game({
             debug: false
         }
     },
-    scene: [ playScene ]
+    scene: [ menuScene, playScene ],
+    parent: 'gameDiv'
                 // 'gameDiv',      // DOM ID of parent container
                 // null,           // default state object
                 // false,          // use transparent canvas background
