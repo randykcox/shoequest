@@ -1,9 +1,9 @@
 import Phaser from 'phaser';
 
-let menuScene = new Phaser.Scene('menu');
+let titleScene = new Phaser.Scene('title');
 let keys;
 
-menuScene.preload = function preload () {
+titleScene.preload = function preload () {
     this.load.spritesheet('man', 'assets/manSpritesheet.png', {
         frameWidth: 32,
         frameHeight: 32
@@ -13,7 +13,8 @@ menuScene.preload = function preload () {
         frameHeight: 5
     });
 };
-menuScene.create = function create () {
+
+titleScene.create = function create () {
     const titleText = this.add.text(80, 120, 'Shoe Quest', {
         fontSize: '40px',
         fill: '#fff'
@@ -31,14 +32,15 @@ menuScene.create = function create () {
         this.scene.switch('play');
     }, this);
 };
-menuScene.update = function update () {
+
+titleScene.update = function update () {
 };
 
-export default menuScene;
+export default titleScene;
 
 //////////////////
 /*
-var menuState = {
+var titleState = {
 
     create: function () {
 

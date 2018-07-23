@@ -26,15 +26,15 @@ playScene.create = function create () {
 
         // this.cameras.main.shake(500);
 
-        const menuDelay = 2000;
+        const titleDelay = 2000;
 
         // Fade out
         const fadeDuration = 250;
-        this.time.delayedCall(menuDelay-fadeDuration, function () {
+        this.time.delayedCall(titleDelay-fadeDuration, function () {
             this.cameras.main.fade(fadeDuration);
         }, [], this);
-        // Back to the menu
-        this.time.delayedCall(menuDelay, function () { this.scene.start('menu'); },
+        // Back to the title
+        this.time.delayedCall(titleDelay, function () { this.scene.start('title'); },
             [], this);
     };
 
