@@ -108,24 +108,28 @@ playScene.create = function create () {
     // Input
     //
     this.cursors = this.input.keyboard.createCursorKeys();
+    this.cursors.W = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
+    this.cursors.A = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
+    this.cursors.S = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
+    this.cursors.D = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
 }
 
 playScene.update = function update () {
-    if (this.cursors.left.isDown) {
+    if (this.cursors.left.isDown || this.cursors.A.isDown) {
         player.setVelocityX(-90);
         player.anims.play('walkLeft', true);
         player.stoppingAnim = 'faceLeft';
     }
-    else if (this.cursors.right.isDown) {
+    else if (this.cursors.right.isDown || this.cursors.D.isDown) {
         player.setVelocityX(90);
         player.anims.play('walkRight', true);
         player.stoppingAnim = 'faceRight';
     }
-    else if (this.cursors.down.isDown) {
+    else if (this.cursors.down.isDown || this.cursors.S.isDown) {
         player.setVelocityX(0);
         player.anims.play('spin', true);
     }
-    else if (this.cursors.up.isDown) {
+    else if (this.cursors.up.isDown || this.cursors.W.isDown) {
         player.setVelocityX(0);
         player.anims.play('faceFront', true);
         player.stoppingAnim = 'faceFront';
