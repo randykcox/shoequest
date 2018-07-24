@@ -13,7 +13,13 @@ module.exports = ({ mode } = { mode: "development" }) => {
         filename: "main.js"
       },
       module: {
-        rules: [ ]
+        rules: [
+          {
+            test: /\.png$/,
+            use: [{ loader: "file-loader", options: { } }]
+          }
+
+        ]
       },
       plugins: [
         new webpack.ProgressPlugin(),

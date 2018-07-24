@@ -1,16 +1,19 @@
 import Phaser from 'phaser';
+import manImageURL from '../assets/manSpritesheet.png';
+import shoeImageURL from '../assets/shoeSpritesheet.png';
+import blockImageURL from '../assets/block.png';
 
 var playScene = new Phaser.Scene('play');
 playScene.preload = function preload () {
-    this.load.spritesheet('man', 'assets/manSpritesheet.png', {
+    this.load.spritesheet('man', manImageURL, {
         frameWidth: 32,
         frameHeight: 32
     });
-    this.load.spritesheet('shoe', 'assets/shoeSpritesheet.png', {
+    this.load.spritesheet('shoe', shoeImageURL, {
         frameWidth: 8,
         frameHeight: 5
     });
-    this.load.image('block', 'assets/block.png');
+    this.load.image('block', blockImageURL);
 };
 var platforms;
 var player;
