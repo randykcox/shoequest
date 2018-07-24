@@ -16,27 +16,8 @@ var platforms;
 var player;
 var shoe;
 var scoreText;
-var cursors;
 
 playScene.create = function create () {
-
-    let win = function win (player, shoe) {
-        shoe.disableBody(true, true);
-        scoreText.setText('You win.');
-
-        // this.cameras.main.shake(500);
-
-        const titleDelay = 2000;
-
-        // Fade out
-        const fadeDuration = 250;
-        this.time.delayedCall(titleDelay-fadeDuration, function () {
-            this.cameras.main.fade(fadeDuration);
-        }, [], this);
-        // Back to the title
-        this.time.delayedCall(titleDelay, function () { this.scene.start('title'); },
-            [], this);
-    };
 
     //
     // Platforms
@@ -47,32 +28,43 @@ playScene.create = function create () {
     //
     // Player
     //
-    player = this.physics.add.sprite(100, 180, 'man');
+    player = this.physics.add.sprite(this.sys.game.config.width/2, 180, 'man');
     player.body.setSize(6, 25, true);
     player.setScale(3);
-    // player.setSize(6, 25);
     player.setBounce(0.2);
     player.setCollideWorldBounds(false);
     this.anims.create({
-        key: 'left',
+        key: 'walkLeft',
         frames: this.anims.generateFrameNumbers('man', { frames: [23, 16, 17, 18, 19, 20, 21, 22] }),
         frameRate: 13,
         repeat: -1
     });
     this.anims.create({
-        key: 'right',
+        key: 'walkRight',
         frames: this.anims.generateFrameNumbers('man', { frames: [15, 8, 9, 10, 11, 12, 13, 14] }),
         frameRate: 13,
         repeat: -1
     });
     this.anims.create({
-        key: 'front',
+        key: 'faceLeft',
+        frames: this.anims.generateFrameNumbers('man', { start: 7, end: 7 }),
+        frameRate: 1,
+        repeat: 0
+    });
+    this.anims.create({
+        key: 'faceRight',
+        frames: this.anims.generateFrameNumbers('man', { start: 3, end: 3 }),
+        frameRate: 1,
+        repeat: 0
+    });
+    this.anims.create({
+        key: 'faceFront',
         frames: this.anims.generateFrameNumbers('man', { start: 1, end: 1 }),
         frameRate: 1,
         repeat: 0
     });
     this.anims.create({
-        key: 'back',
+        key: 'faceBack',
         frames: this.anims.generateFrameNumbers('man', { start: 5, end: 5 }),
         frameRate: 1,
         repeat: 0
@@ -83,6 +75,7 @@ playScene.create = function create () {
         frameRate: 8,
         repeat: -1
     });
+    player.stoppingAnim = 'faceFront';
 
     this.physics.add.collider(player, platforms);
 
@@ -101,7 +94,7 @@ playScene.create = function create () {
     shoe.anims.play('glow', true);
     this.physics.add.collider(shoe, platforms);
 
-    this.physics.add.overlap(player, shoe, win, null, this);
+    this.physics.add.overlap(player, shoe, this.win, null, this);
 
     //
     // Text
@@ -111,33 +104,68 @@ playScene.create = function create () {
     //
     // Input
     //
-    cursors = this.input.keyboard.createCursorKeys();
+    this.cursors = this.input.keyboard.createCursorKeys();
 }
 
 playScene.update = function update () {
-    if (cursors.left.isDown) {
+    if (this.cursors.left.isDown) {
         player.setVelocityX(-90);
-
-        player.anims.play('left', true);
+        player.anims.play('walkLeft', true);
+        player.stoppingAnim = 'faceLeft';
     }
-    else if (cursors.right.isDown) {
+    else if (this.cursors.right.isDown) {
         player.setVelocityX(90);
-
-        player.anims.play('right', true);
+        player.anims.play('walkRight', true);
+        player.stoppingAnim = 'faceRight';
     }
-    else if (cursors.down.isDown) {
+    else if (this.cursors.down.isDown) {
         player.setVelocityX(0);
         player.anims.play('spin', true);
     }
-    else if (cursors.up.isDown) {
+    else if (this.cursors.up.isDown) {
         player.setVelocityX(0);
-        player.anims.play('front', true);
+        player.anims.play('faceFront', true);
+        player.stoppingAnim = 'faceFront';
     }
     else {
         player.setVelocityX(0);
-
-        player.anims.stop();
+        // player.anims.stop();
+        player.anims.play(player.stoppingAnim);
     }
+
+    // Falling off the bottom of the screen
+    if (player.y > this.sys.game.config.height) {
+        this.dead();
+    }
+}
+
+playScene.stopPlayer = function stopPlayer () {
+}
+
+playScene.win = function win (player, shoe) {
+    shoe.disableBody(true, true);
+    scoreText.setText('You win.');
+
+    this.backToTitle();
+}
+
+playScene.dead = function dead () {
+    scoreText.setText('You are DEAD!');
+    console.log('Dead.');
+    this.backToTitle();
+}
+
+playScene.backToTitle = function backToTitle () {
+    const titleDelay = 2000;
+
+    // Fade out
+    const fadeDuration = 250;
+    this.time.delayedCall(titleDelay-fadeDuration, function () {
+        this.cameras.main.fade(fadeDuration);
+    }, [], this);
+    // Back to the title
+    this.time.delayedCall(titleDelay, function () { this.scene.start('title'); },
+        [], this);
 }
 
 export default playScene;

@@ -22,6 +22,3 @@ var game = new Phaser.Game({
     scene: [ titleScene, playScene ],
     parent: 'gameDiv'
 });
-
-
-
