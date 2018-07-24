@@ -4,6 +4,7 @@ import titleScene from './title';
 import playScene from './play';
 
 var game = new Phaser.Game({
+    title: 'Shoe Quest',
     type: Phaser.AUTO,    // renderer
     width: 640,
     height: 480,
