@@ -43,8 +43,20 @@ playScene.create = function create () {
         repeat: -1
     });
     this.anims.create({
+        key: 'walkLeftLookUp',
+        frames: this.anims.generateFrameNumbers('man', { frames: [39, 32, 33, 34, 35, 36, 37, 38] }),
+        frameRate: 13,
+        repeat: -1
+    });
+    this.anims.create({
         key: 'walkRight',
         frames: this.anims.generateFrameNumbers('man', { frames: [15, 8, 9, 10, 11, 12, 13, 14] }),
+        frameRate: 13,
+        repeat: -1
+    });
+    this.anims.create({
+        key: 'walkRightLookUp',
+        frames: this.anims.generateFrameNumbers('man', { frames: [31, 24, 25, 26, 27, 28, 29, 30] }),
         frameRate: 13,
         repeat: -1
     });
@@ -117,13 +129,21 @@ playScene.create = function create () {
 playScene.update = function update () {
     if (this.cursors.left.isDown || this.cursors.A.isDown) {
         player.setVelocityX(-90);
-        player.anims.play('walkLeft', true);
         player.stoppingAnim = 'faceLeft';
+        if (this.cursors.up.isDown || this.cursors.W.isDown) {
+            player.anims.play('walkLeftLookUp', true);
+        } else {
+            player.anims.play('walkLeft', true);
+        }
     }
     else if (this.cursors.right.isDown || this.cursors.D.isDown) {
         player.setVelocityX(90);
-        player.anims.play('walkRight', true);
         player.stoppingAnim = 'faceRight';
+        if (this.cursors.up.isDown || this.cursors.W.isDown) {
+            player.anims.play('walkRightLookUp', true);
+        } else {
+            player.anims.play('walkRight', true);
+        }
     }
     else if (this.cursors.down.isDown || this.cursors.S.isDown) {
         player.setVelocityX(0);
