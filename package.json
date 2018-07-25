@@ -1,6 +1,6 @@
 {
   "name": "shoequest",
-  "version": "2.0.2",
+  "version": "2.0.3",
   "description": "Low-res JavaScript video game",
   "scripts": {
     "webpack-dev-server": "webpack-dev-server",
