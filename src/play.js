@@ -79,8 +79,32 @@ playScene.create = function create () {
         repeat: 0
     });
     this.anims.create({
+        key: 'faceLeftLookUp',
+        frames: this.anims.generateFrameNumbers('man', { start: 58, end: 58 }),
+        frameRate: 1,
+        repeat: 0
+    });
+    this.anims.create({
+        key: 'faceLeftLookDown',
+        frames: this.anims.generateFrameNumbers('man', { start: 59, end: 59 }),
+        frameRate: 1,
+        repeat: 0
+    });
+    this.anims.create({
         key: 'faceRight',
         frames: this.anims.generateFrameNumbers('man', { start: 3, end: 3 }),
+        frameRate: 1,
+        repeat: 0
+    });
+    this.anims.create({
+        key: 'faceRightLookUp',
+        frames: this.anims.generateFrameNumbers('man', { start: 56, end: 56 }),
+        frameRate: 1,
+        repeat: 0
+    });
+    this.anims.create({
+        key: 'faceRightLookDown',
+        frames: this.anims.generateFrameNumbers('man', { start: 57, end: 57 }),
         frameRate: 1,
         repeat: 0
     });
@@ -103,6 +127,7 @@ playScene.create = function create () {
         repeat: -1
     });
     player.stoppingAnim = 'faceFront';
+    this.playerIsAlive = true;
 
     this.physics.add.collider(player, platforms);
 
@@ -139,6 +164,10 @@ playScene.create = function create () {
 }
 
 playScene.update = function update () {
+    if (!this.playerIsAlive) {
+        return;
+    }
+
     if (this.cursors.left.isDown || this.cursors.A.isDown) {
         player.setVelocityX(-90);
         player.stoppingAnim = 'faceLeft';
@@ -172,7 +201,6 @@ playScene.update = function update () {
     }
     else {
         player.setVelocityX(0);
-        // player.anims.stop();
         player.anims.play(player.stoppingAnim);
     }
 
@@ -180,9 +208,6 @@ playScene.update = function update () {
     if (player.y > this.sys.game.config.height) {
         this.dead();
     }
-}
-
-playScene.stopPlayer = function stopPlayer () {
 }
 
 playScene.win = function win (player, shoe) {
@@ -193,6 +218,7 @@ playScene.win = function win (player, shoe) {
 }
 
 playScene.dead = function dead () {
+    this.playerIsAlive = false;
     scoreText.setText('You are DEAD!');
     console.log('Dead.');
     this.backToTitle();
