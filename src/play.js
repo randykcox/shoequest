@@ -168,7 +168,11 @@ playScene.update = function update () {
         return;
     }
 
-    if (this.cursors.left.isDown || this.cursors.A.isDown) {
+    // Falling
+    if (!player.body.onFloor()) {
+        player.anims.play('spin', true);
+    }
+    else if (this.cursors.left.isDown || this.cursors.A.isDown) {
         player.setVelocityX(-90);
         player.stoppingAnim = 'faceLeft';
         if (this.cursors.up.isDown || this.cursors.W.isDown) {
@@ -190,11 +194,12 @@ playScene.update = function update () {
             player.anims.play('walkRight', true);
         }
     }
-    else if (this.cursors.down.isDown || this.cursors.S.isDown) {
-        player.setVelocityX(0);
-        player.anims.play('spin', true);
-    }
     else if (this.cursors.up.isDown || this.cursors.W.isDown) {
+        player.setVelocityX(0);
+        player.anims.play('faceBack', true);
+        player.stoppingAnim = 'faceBack';
+    }
+    else if (this.cursors.down.isDown || this.cursors.S.isDown) {
         player.setVelocityX(0);
         player.anims.play('faceFront', true);
         player.stoppingAnim = 'faceFront';
