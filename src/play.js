@@ -26,13 +26,13 @@ playScene.create = function create () {
     // Platforms
     //
     platforms = this.physics.add.staticGroup();
-    platforms.create(0, 240, 'block').setScale(60, 3).refreshBody();
+    platforms.create(0, 240, 'block').setScale(60, 1).refreshBody();
 
     //
     // Player
     //
     player = this.physics.add.sprite(this.sys.game.config.width/2, 180, 'man');
-    player.body.setSize(6, 25, true);
+    player.body.setSize(6, 25).setOffset(7, 7);
     player.setScale(3);
     player.setBounce(0.2);
     player.setCollideWorldBounds(false);
@@ -135,7 +135,7 @@ playScene.create = function create () {
     // Shoe
     //
     shoe = this.physics.add.sprite(20, 210, 'shoe');
-    shoe.body.setSize(4, 1, true);
+    shoe.body.setSize(4, 2).setOffset(2, 1);
     shoe.setScale(3);
     this.anims.create({
         key: 'glow',
@@ -173,8 +173,9 @@ playScene.update = function update () {
         player.anims.play('spin', true);
     }
     else if (this.cursors.left.isDown || this.cursors.A.isDown) {
+        player.body.setSize(5, 25).setOffset(7, 7); // hit box is thinner for side view
         player.setVelocityX(-90);
-        player.stoppingAnim = 'faceLeft';
+        player.stoppingAnim = 'faceLeft'; // which anim to play when the player stops
         if (this.cursors.up.isDown || this.cursors.W.isDown) {
             player.anims.play('walkLeftLookUp', true);
         } else if (this.cursors.down.isDown || this.cursors.S.isDown) {
@@ -184,6 +185,7 @@ playScene.update = function update () {
         }
     }
     else if (this.cursors.right.isDown || this.cursors.D.isDown) {
+        player.body.setSize(5, 25).setOffset(8, 7); // hit box is thinner for side view
         player.setVelocityX(90);
         player.stoppingAnim = 'faceRight';
         if (this.cursors.up.isDown || this.cursors.W.isDown) {
@@ -195,11 +197,13 @@ playScene.update = function update () {
         }
     }
     else if (this.cursors.up.isDown || this.cursors.W.isDown) {
+        player.body.setSize(6, 25).setOffset(7, 7); // hit box is wider
         player.setVelocityX(0);
         player.anims.play('faceBack', true);
         player.stoppingAnim = 'faceBack';
     }
     else if (this.cursors.down.isDown || this.cursors.S.isDown) {
+        player.body.setSize(6, 25).setOffset(7, 7); // hit box is wider
         player.setVelocityX(0);
         player.anims.play('faceFront', true);
         player.stoppingAnim = 'faceFront';
