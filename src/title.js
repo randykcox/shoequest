@@ -8,15 +8,20 @@ titleScene.preload = function preload () {
 };
 
 titleScene.create = function create () {
-    this.add.image(320, 280, 'titleImg')
+    const centerX = this.sys.game.config.width/2;
+    const centerY = this.sys.game.config.height/2
+
+    this.add.image(centerX, centerY, 'titleImg')
         .setScale(5);
 
-    const startText = this.add.text(155, this.sys.game.config.height-80,
+    const startText = this.add.text(
+        centerX, this.sys.game.config.height-80,
         'press space to start',
         {
         fontSize: '25px',
         fill: '#fff'
     });
+    startText.setOrigin(0.5, 0.5);
 
     const versionText = this.add.text(5, this.sys.game.config.height-20,
         `v${VERSION}`, // global variable created by webpack.DefinePlugin
